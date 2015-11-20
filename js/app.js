@@ -176,7 +176,7 @@ $(function() {
     // function loads marker infoWindow contents and displays the window
     self.load_marker_content = function (map, marker, zoo) {
       $.ajax({
-        url: 'https://en.wokipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles='+encodeURIComponent(zoo.name()),
+        url: 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles='+encodeURIComponent(zoo.name()),
         dataType: "jsonp",
         timeout: 3000,
         success: function(data) {
