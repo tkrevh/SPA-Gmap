@@ -31,3 +31,10 @@ html, body {
 ul.ui-autocomplete.ui-menu {
   z-index: 1000;
 }
+
+@media (max-width:600px) {
+  .gm-style-iw {
+      height: 150px;
+      width: 200px;
+}
+}

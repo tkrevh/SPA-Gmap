@@ -110,13 +110,13 @@ function initMap() {
     mapTypeControl: false,
     zoom: 5
   });
-};
+}
 
 // helper function to get the first property of an object
 function getFirstProperty(obj) {
   for (var i in obj)
     return obj[i];
-};
+}
 
 // autocomplete for search
 ko.bindingHandlers.ko_autocomplete = {
@@ -176,14 +176,18 @@ $(function() {
     // function loads marker infoWindow contents and displays the window
     self.load_marker_content = function (map, marker, zoo) {
       $.ajax({
-        url: 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles='+encodeURIComponent(zoo.name()),
+        url: 'https://en.wokipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles='+encodeURIComponent(zoo.name()),
         dataType: "jsonp",
+        timeout: 3000,
         success: function(data) {
           infoBox.setContent(getFirstProperty(data.query.pages).extract);
           infoBox.open(map, marker);
         },
-        error: function(data) {
-          alert('Sorry, could not load description from Wikipedia.');
+        error: function(x, t, m) {
+          if(t==="timeout") {
+            infoBox.setContent('Sorry, could not load data from Wikipedia.');
+            infoBox.open(map, marker);
+          }
         }
       });
     };
