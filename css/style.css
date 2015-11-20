@@ -1,0 +1,33 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#menu-toggle {
+  margin-left: -40px;
+  margin-top: -30px;
+}
+
+.selected-nav
+{
+  text-decoration: none;
+  background: rgba(255,255,255,1) !important;
+  color: #000 !important;
+}
+/* Fix autocomplete dropdown not showing issue */
+ul.ui-autocomplete.ui-menu {
+  z-index: 1000;
+}

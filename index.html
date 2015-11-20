@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+</head>
+<body>
+   <div id="map"></div>
+   <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+          <div class="input-group">
+            <input data-bind="value: search, ko_autocomplete: { source: getZooList(), select: setSearch }" type="text" class="form-control" placeholder="Search for zoos...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" aria-hidden="true" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </span>
+          </div>
+          <ul data-bind="foreach: searchedZoos" class="sidebar-nav">
+            <li>
+                <!-- <a data-bind="click: $parent.setSelectedZoo, text: name, css: {active : $data == $parent.selectedZoo() }" href="#"></a> -->
+                <a data-bind="click: $parent.setSelectedZoo, text: name, css: {'selected-nav' : $data == $parent.selectedZoo() }" href="#"></a>
+            </li>
+          </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Search</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+  <script src="js/app.js"></script>
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDVU0ZtDGZxq7BWhmvDWXg5gjPBYchxlVo&callback=initMap">
+  </script>
+</body>
+</html>
+
