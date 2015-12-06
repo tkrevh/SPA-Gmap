@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 </head>
 <body>
    <div id="map"></div>
@@ -35,8 +36,7 @@
           </div>
           <ul data-bind="foreach: searchedZoos" class="sidebar-nav">
             <li>
-                <!-- <a data-bind="click: $parent.setSelectedZoo, text: name, css: {active : $data == $parent.selectedZoo() }" href="#"></a> -->
-                <a data-bind="click: $parent.setSelectedZoo, text: name, css: {'selected-nav' : $data == $parent.selectedZoo() }" href="#"></a>
+                <a data-bind="click: $parent.setSelectedZoo, event: { mouseover: $parent.animateMarker, mouseout: $parent.removeAnimation }, text: name, css: {'selected-nav' : $data == $parent.selectedZoo() || $data == $parent.hoveredZoo() }" href="#"></a>
             </li>
           </ul>
         </div>
@@ -59,7 +59,7 @@
     </div>
     <!-- /#wrapper -->
   <script src="js/app.js"></script>
-  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDVU0ZtDGZxq7BWhmvDWXg5gjPBYchxlVo&callback=initMap">
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDVU0ZtDGZxq7BWhmvDWXg5gjPBYchxlVo&callback=initMap" async>
   </script>
 </body>
 </html>

@@ -78,7 +78,7 @@ var zoosData = [
     lon: 2.4186
   },
   {
-    name: 'Valencia Biopark',
+    name: 'Valencia Bioparc',
     lat: 39.478,
     lon: -0.407
   },
@@ -103,12 +103,11 @@ var Zoo = function(data) {
 function initMap() {
   var zoo = zoosData[0];
   var myLatLng = {lat: zoo.lat, lng: zoo.lon};
-
   // Create a map object and specify the DOM element for display.
   map = new google.maps.Map(document.getElementById('map'), {
     center: myLatLng,
     mapTypeControl: false,
-    zoom: 5
+    zoom:  5 - ($(window).width() < 800 ? 1 : 0)  // adjust zoom for smaller devices
   });
 }
 
@@ -128,13 +127,15 @@ ko.bindingHandlers.ko_autocomplete = {
   }
 };
 
-$(function() {
+/* Need to use window.load, as we load google maps script asynchronously and 
+   we need that loaded before we can initialize the google maps markers, etc.
+*/
+$(window).load(function() {
   // setup menu toggle button
   $('#menu-toggle').click(function(e) {
       e.preventDefault();
       $('#wrapper').toggleClass('toggled');
   });
-
   // KnockoutJS
   var ViewModel = function() {
     var self = this;
@@ -142,13 +143,16 @@ $(function() {
     var zooNames = []; // used for autocomplete
 
     self.search = ko.observable();
+    self.hoveredZoo = ko.observable();
     self.selectedZoo = ko.observable();
     self.zooList = ko.observableArray([]);
 
     // Initialize the observable array and create markers. Is there maybe a better way to store markers ?
+    var image = 'img/zoo.png';
     zoosData.forEach(function(zooData) {
       var marker = new google.maps.Marker({
         map: map,
+        icon: image,
         position: {
           lat: zooData.lat,
           lng: zooData.lon
@@ -162,6 +166,12 @@ $(function() {
       marker.addListener('click', function() {
         self.setSelectedZoo(zoo);
       });
+      marker.addListener('mouseover', function() {
+        self.hoveredZoo(zoo);
+      });
+      marker.addListener('mouseout', function() {
+        self.hoveredZoo(null);
+      });
     });
 
     self.getZooList = function() {
@@ -171,6 +181,14 @@ $(function() {
     self.setSearch = function(event, ui) {
       $(event.target).val("");
       self.search(ui.item.label);
+    };
+
+    self.animateMarker = function(zoo) {
+      zoo.marker.setAnimation(google.maps.Animation.BOUNCE);
+    };
+
+    self.removeAnimation = function(zoo) {
+      zoo.marker.setAnimation(null);
     };
 
     // function loads marker infoWindow contents and displays the window
@@ -204,6 +222,9 @@ $(function() {
       self.selectedZoo(zoo);
       zoo.marker.setAnimation(google.maps.Animation.DROP);
       self.load_marker_content(map, zoo.marker, zoo);
+      // hide list view upon selecting a zoo
+      if (!$('#wrapper').hasClass('toggled'))
+        $('#wrapper').addClass('toggled');
     };
 
     // returns Zoos filtered by 'search' keyword

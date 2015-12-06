@@ -12,6 +12,9 @@
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
+  /* prevent the info window close bug, where user can not close the 
+     info window if it is positioned too high up */
+  width: 250px; 
 }
 
 #wrapper.toggled {
@@ -98,7 +101,7 @@
   background: none;
 }
 
-@media(min-width:768px) {
+@media(min-width:960px) {
   #wrapper {
     padding-left: 250px;
   }
